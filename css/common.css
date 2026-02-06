@@ -1,0 +1,418 @@
+:root {
+
+    /* === Variables === */
+
+    /* Main */
+    --color-primary: #e41d03;
+    --color-secondary: #0c0c01;
+    --color-text: black;
+    --color-text-inverted: white;
+    --color-contrast: whitesmoke;
+
+    /* Information Boxes */
+    --color-box: var(--color-primary);
+    --color-box-background: var(--color-contrast);
+    --color-box-head-text: var(--color-text-inverted);
+
+    /* Tables */
+    --color-table: var(--color-primary);
+    --color-table-row-alternate: var(--color-contrast);
+    --color-table-head-text: var(--color-text-inverted);
+
+    /* Code */
+    --color-code: var(--color-text);
+    --color-code-comment: #1c7c46;
+    --color-code-paragraph: #696969;
+
+    /* Page Header/Footer */
+    --color-header-footer-background: var(--color-secondary);
+    --color-header-footer-text: var(--color-text-inverted);
+
+    /* Font Families */
+    --font-family-primary: sans-serif;
+    --font-family-code: monospace;
+
+    /* === Screen & Browser Styles === */
+    --color-screen-background: lightgray;
+
+    font-family: var(--font-family-primary);
+    font-size: 10pt;
+    color: var(--color-text);
+}
+
+/***************************************************
+ * Page Styles
+ ***************************************************/
+
+body>h1,
+.titlepage h1 {
+    /* Define the document title */
+    string-set: document-title content(text);
+}
+
+@page {
+    counter-increment: page 1;
+    -ro-truncate-margin-after-break: always;
+
+    @top-center {
+        content: string(document-title);
+        height: 0.75cm;
+        background-color: var(--color-header-footer-background);
+        color: var(--color-header-footer-text);
+        margin-top: 0.5cm;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        font-weight: bold;
+    }
+
+    @bottom-center {
+        content: "www.pdfreactor.com/manual";
+        margin-bottom: 0.5cm;
+        margin-top: 0.75cm;
+        background-color: var(--color-header-footer-background);
+        height: 0.75cm;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        color: var(--color-header-footer-text);
+    }
+}
+
+@page:right {
+
+    @bottom-right {
+        content: counter(page);
+        text-align: center;
+        background-color: var(--color-header-footer-background);
+        color: var(--color-header-footer-text);
+        font-weight: bold;
+        z-index: 10;
+        position: absolute;
+        margin-bottom: 0.5cm;
+        margin-top: 0.5cm;
+        height: 1cm;
+        width: 1cm;
+        right: 1cm;
+        bottom: 0;
+        border-radius: 50%;
+    }
+}
+
+@page:left {
+
+    @bottom-left {
+        content: counter(page);
+        text-align: center;
+        background-color: var(--color-header-footer-background);
+        color: var(--color-header-footer-text);
+        font-weight: bold;
+        z-index: 10;
+        position: absolute;
+        margin-bottom: 0.5cm;
+        margin-top: 0.5cm;
+        height: 1cm;
+        width: 1cm;
+        left: 1cm;
+        bottom: 0;
+        border-radius: 50%;
+    }
+}
+
+/* Create title pages */
+.titlepage {
+    page: titlepage;
+}
+
+@page titlepage {
+
+    /* Adjust page counters for documents with a title page */
+    counter-reset: page -1;
+
+    /* Remove margin-boxes */
+    @top-center {
+        content: none;
+        background-color: unset;
+    }
+
+    @bottom-center {
+        content: none;
+        background-color: unset;
+    }
+
+    @bottom-right {
+        content: none;
+        background-color: unset;
+    }
+}
+
+/* Styles that should only affect browsers */
+@media screen {
+
+    html {
+        background-color: var(--color-screen-background);
+    }
+
+    body {
+        max-width: 1200px;
+        margin: 8px auto;
+        padding: 32px;
+        padding-top: 0;
+        border: 1px solid darkgray;
+        background-color: white;
+    }
+
+    img {
+        max-width: 18cm;
+    }
+
+}
+
+/***************************************************
+ * General
+ ***************************************************/
+
+h1 {
+    font-size: 24pt;
+    margin-bottom: 0.5cm;
+    margin-top: 1cm !important;
+}
+
+h2 {
+    counter-increment: chapter 1;
+    counter-reset: subchapter 0;
+    bookmark-state: closed;
+    
+    font-size: 18pt;
+    margin: 0.4cm 0;
+}
+
+h3 {
+    counter-increment: subchapter 1;
+
+    font-size: 14pt;
+    margin: 0.4cm 0;
+}
+
+h2::before {
+    content: counter(chapter) ". ";
+}
+
+h3::before {
+    content: counter(chapter) "." counter(subchapter) ". ";
+}
+
+.no-counters h2::before, .no-counters h3::before {
+    content: none;
+}
+
+h1,
+h2,
+h3 {
+    font-weight: normal;
+    margin-top: 0.5cm;
+    break-after: avoid;
+}
+
+.pageBreakBefore,
+h1 {
+    break-before: page;
+}
+
+div>h1 {
+    margin-top: 0 !important;
+}
+
+div,
+div p,
+blockquote {
+    color: var(--color-text);
+}
+
+p,
+td,
+th,
+li {
+    font-size: 10pt;
+    line-height: 1.25;
+}
+
+p {
+    text-align: justify;
+    font-size-adjust: -ro-from-font;
+}
+
+a {
+    color: var(--color-text);
+    text-decoration: underline;
+}
+
+barcode,
+math {
+    color: black;
+}
+
+blockquote {
+    font-family: serif;
+    font-style: italic;
+    margin: 2mm;
+    padding: 0;
+}
+
+table,
+td {
+    border: 1pt solid var(--color-table);
+    border-block-style: none;
+    padding: 2.1mm;
+    padding-top: 2.5mm;
+}
+
+table {
+    text-align: start;
+    border-collapse: collapse;
+    width: 100%;
+    box-decoration-break: clone;
+    border-bottom: 1pt solid var(--color-table);
+}
+
+table caption {
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-top: 1mm;
+    margin-bottom: 1mm;
+    text-align: start;
+}
+
+tr:last-child {
+    border-bottom: solid var(--color-table) 1pt;
+}
+
+tr:nth-child(2n) {
+    background-color: var(--color-table-row-alternate);
+}
+
+.titlepage tr {
+    border: unset;
+    background-color: unset;
+}
+
+thead tr td,
+th {
+    color: var(--color-table-head-text);
+    background-color: var(--color-table);
+    font-weight: bold;
+}
+
+/***************************************************
+ * Box Classes
+ ***************************************************/
+
+div.code,
+div.result,
+div.experimentalNote,
+img.sample {
+    margin-bottom: 0.25cm;
+    border: none;
+    padding: 2.5mm;
+    break-before: avoid;
+    break-inside: avoid;
+    background-color: var(--color-box-background) !important;
+}
+
+pre,
+code,
+.code {
+    font-family: var(--font-family-code);
+    font-size: 0.9em;
+}
+
+p code {
+    color: var(--color-code-paragraph);
+}
+
+code {
+    font-size: 8pt;
+    line-height: 1.2;
+    white-space: pre;
+}
+
+.comment {
+    color: var(--color-code-comment);
+}
+
+div.result {
+    border-left: 2pt solid var(--color-box);
+    padding-left: 1em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+div.result p:first-child {
+    margin-top: 0;
+}
+
+div.result p:last-child {
+    margin-bottom: 0;
+}
+
+.note::before {
+    font-weight: bold;
+    margin: 0;
+    padding: 1mm;
+    font-weight: bold;
+    color: var(--color-box-head-text);
+    background-color: var(--color-box);
+    display: block;
+    content: "Note";
+}
+
+.important::before {
+    margin: 0 !important;
+    padding: 1mm !important;
+    font-weight: bold;
+    color: var(--color-box-head-text);
+    background-color: var(--color-box);
+    display: block;
+    content: "Important";
+    margin-left: -2pt !important;
+    margin-right: -2pt !important;
+    margin-top: -2pt !important;
+    padding-top: 3pt !important;
+    padding-left: 6pt !important;
+}
+
+.note,
+.important {
+    margin-top: 3mm;
+    margin-bottom: 3mm;
+    padding-bottom: 2mm;
+    background-color: var(--color-box-background);
+    color: var(--color-text);
+}
+
+.note>p,
+.important>p {
+    margin: 0;
+    padding: 2mm 2mm 0 2mm;
+    font-size: 0.9em;
+}
+
+.important {
+    border: none;
+    border-left: dashed var(--color-box) 2pt;
+    border-bottom: dashed var(--color-box) 2pt;
+    border-right: dashed var(--color-box) 2pt;
+    background-color: var(--color-box-background) !important;
+}
+
+/******************************************
+ * Viewer Preferences
+ *******************************************/
+
+@-ro-preferences {
+    first-page-side: verso;
+    page-layout: 2 column;
+    initial-zoom: fit-page;
+}

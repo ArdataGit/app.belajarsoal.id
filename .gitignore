@@ -1,0 +1,50 @@
+Webappsblajar.zip
+cgi-bin.zip
+plugins.zip
+laravel/storage/framework/sessions
+laravel/storage/logs
+laravel/storage/framework/views
+laravel/app.zip
+
+# ZIP / backup / file besar
+*.zip
+*.sql
+*.gz
+*.log
+
+# Laravel / PHP
+/vendor
+/node_modules
+/storage
+/public/storage
+/.env
+/.env.*
+/.htaccess
+
+# Laravel cache / session / views
+/laravel/storage/framework/sessions
+/laravel/storage/framework/views
+/laravel/storage/logs
+
+# OS / Editor / hidden files
+.DS_Store
+__MACOSX/
+Thumbs.db
+*.swp
+/.idea
+/.vscode
+
+# Mix / build
+/public/hot
+/public/build
+/mix-manifest.json
+
+# Plugins / uploads
+/upload/
+/plugins/
+/plugin/
+
+# Server files / FTP
+.ftpquota
+ftp/
+cgi-bin/
