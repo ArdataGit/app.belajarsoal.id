@@ -1,6 +1,6 @@
 # Laravel runtime / cache / session / logs
 laravel/storage/
-laravel/vendor/
+laravel/vendor*/
 
 # File backup / ZIP / SQL / GZ / log lain
 *.zip
